@@ -1,6 +1,6 @@
 import pdfMake from "pdfmake/build/pdfmake";
-import vfs_fonts from "pdfmake/build/vfs_fonts.js";
-pdfMake.vfs = vfs_fonts.pdfMake.vfs;
+import * as vfsFonts from "pdfmake/build/vfs_fonts"; // Use named import for vfs_fonts
+pdfMake.vfs = vfsFonts.pdfMake.vfs; // Access vfs as a property of the imported object
 
 type Payment = {
   id: number;
