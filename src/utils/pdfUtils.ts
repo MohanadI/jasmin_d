@@ -1,7 +1,3 @@
-import pdfMake from "pdfmake/build/pdfmake";
-import * as vfsFonts from "pdfmake/build/vfs_fonts"; // Use named import for vfs_fonts
-pdfMake.vfs = vfsFonts.pdfMake.vfs; // Access vfs as a property of the imported object
-
 type Payment = {
   id: number;
   apartment: number;
@@ -11,7 +7,16 @@ type Payment = {
   status: string;
 };
 
-export const generateInvoicePDF = (payment: Payment) => {
+export const generateInvoicePDF = async (payment: Payment) => {
+    const pdfMakeModule = await import("pdfmake/build/pdfmake");
+    const vfsFontsModule = await import("pdfmake/build/vfs_fonts");
+
+    // Access the default export from the dynamically imported modules
+    const pdfMake = pdfMakeModule.default;
+    const vfs = vfsFontsModule.default;
+
+    // Assign the virtual file system (fonts) to pdfMake
+    pdfMake.vfs = vfs.pdfMake.vfs;
   const docDefinition: any = {
     pageSize: "A4",
     pageOrientation: "portrait",
