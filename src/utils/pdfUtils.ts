@@ -7,15 +7,12 @@ type Payment = {
   status: string;
 };
 
-import pdfFonts from "pdfmake/build/vfs_fonts";
-
-
 export const generateInvoicePDF = async (payment: Payment) => {
   try {
     // Dynamically import pdfMake and vfs_fonts
     var pdfMake = (await import("pdfmake/build/pdfmake")).default;
-    // var pdfFonts = (await import("pdfmake/build/vfs_fonts")).default;
-    pdfMake.vfs = pdfFonts.pdfMake.vfs;
+    var pdfFonts = (await import("./fonts")).default;
+    pdfMake.vfs = pdfFonts;
 
     const docDefinition: any = {
       pageSize: "A4",
