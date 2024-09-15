@@ -12,13 +12,13 @@ export const generateInvoicePDF = async (payment: Payment) => {
     // Dynamically import pdfMake and vfs_fonts
     const pdfMakeModule = await import("pdfmake/build/pdfmake");
     const vfsFontsModule = await import("pdfmake/build/vfs_fonts");
+    
 
     // Access the default export from the dynamically imported modules
     const pdfMake = pdfMakeModule.default;
-    const vfsFonts = vfsFontsModule.default;
 
     // Assign the virtual file system (fonts) to pdfMake
-    pdfMake.vfs = vfsFonts.pdfMake.vfs;
+    pdfMake.vfs = vfsFontsModule.pdfMake.vfs;
 
     const docDefinition: any = {
       pageSize: "A4",
