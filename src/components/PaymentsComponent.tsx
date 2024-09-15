@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { generateInvoicePDF } from "../utils/pdfUtils";
+import { supabase } from "../api/supabaseClient";
 
 type Payment = {
   id: number;
@@ -29,9 +30,14 @@ const PaymentsComponent = () => {
   };
 
   const fetchPayments = async () => {
-    const response = await fetch("/payments"); // Adjust this URL if necessary
-    const data = await response.json();
-    setPayments(data);
+    const { data, error } = await supabase.from("payments").select("*"); // You can customize the columns if necessary
+
+    if (error) {
+      console.error("Error fetching payments:", error.message);
+      return;
+    }
+
+    setPayments(data); // Set the payments data to state
   };
 
   useEffect(() => {
@@ -40,20 +46,19 @@ const PaymentsComponent = () => {
 
   const handlePaymentSubmit = async (e: any) => {
     e.preventDefault();
-    const token = localStorage.getItem("token");
-    const headers = new Headers();
-    headers.append("Authorization", token || "");
-    headers.append("Content-Type", "application/json");
 
-    await fetch("/payment", {
-      method: "POST",
-      headers,
-      body: JSON.stringify({ apartment, amount, date, description, status }),
-    });
+    const { error } = await supabase
+      .from("payments")
+      .insert([{ apartment, amount, date, description, status }]);
 
-    fetchPayments(); // Refresh the payments list
-    resetForm(); // Reset the form after successful submission
-    setIsModalOpen(false); // Close the modal
+    if (error) {
+      console.error("Error submitting payment:", error.message);
+      return;
+    }
+
+    fetchPayments();
+    resetForm();
+    setIsModalOpen(false);
   };
 
   const handleCloseModal = () => {
@@ -95,15 +100,15 @@ const PaymentsComponent = () => {
   );
 
   const handleDeletePayment = async (paymentId: number) => {
-    const token = localStorage.getItem("token");
-    const headers = new Headers();
-    headers.append("Authorization", token || "");
-    headers.append("Content-Type", "application/json");
+    const { error } = await supabase
+      .from("payments")
+      .delete()
+      .eq("id", paymentId); // Delete the record where the id matches
 
-    await fetch(`/payment/${paymentId}`, {
-      method: "DELETE",
-      headers,
-    });
+    if (error) {
+      console.error("Error deleting payment:", error.message);
+      return;
+    }
 
     fetchPayments(); // Refresh the payments list after deletion
   };

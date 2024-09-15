@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { supabase } from "../api/supabaseClient";
 
 type Expense = {
   id: number;
@@ -20,8 +21,13 @@ const ExpensesComponent = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const fetchExpenses = async () => {
-    const response = await fetch("/expenses"); // Adjust this URL if necessary
-    const data = await response.json();
+    const { data, error } = await supabase.from("expenses").select("*"); // You can customize the columns if necessary
+
+    if (error) {
+      console.error("Error fetching expenses:", error.message);
+      return;
+    }
+
     setExpenses(data);
   };
 
@@ -31,19 +37,19 @@ const ExpensesComponent = () => {
 
   const handleExpenseSubmit = async (e: any) => {
     e.preventDefault();
-    const token = localStorage.getItem("token");
-    const headers = new Headers();
-    headers.append("Authorization", token || "");
-    headers.append("Content-Type", "application/json");
 
-    await fetch("/expense", {
-      method: "POST",
-      headers,
-      body: JSON.stringify({ description, amount, date, category, status }),
-    });
+    const { error } = await supabase
+      .from("expenses")
+      .insert([{ description, amount, date, category, status }]);
+
+    if (error) {
+      console.error("Error submitting expense:", error.message);
+      return;
+    }
+
     fetchExpenses();
-    setIsModalOpen(false); // Close the modal
-    resetForm(); // Reset the form after submission
+    setIsModalOpen(false);
+    resetForm();
   };
 
   const resetForm = () => {
@@ -59,6 +65,17 @@ const ExpensesComponent = () => {
       expense.description?.toString().includes(searchQuery) ||
       expense.category?.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  const handleDeleteExpense = async (Id: number) => {
+    const { error } = await supabase.from("expenses").delete().eq("id", Id); // Delete the record where the id matches
+
+    if (error) {
+      console.error("Error deleting expense:", error.message);
+      return;
+    }
+
+    fetchExpenses();
+  };
 
   const handleCloseModal = () => {
     resetForm(); // Reset the form when the modal is closed
@@ -113,7 +130,19 @@ const ExpensesComponent = () => {
                     {expense.description}
                   </td>
                   <td className="py-2 px-4 border-b bg-gray:300">
-                    {expense.status === "paid" ? "مدفوع" : "غير مدفوع"}
+                    <div className="flex flex-row justify-between">
+                      <p>{expense.status === "paid" ? "مدفوع" : "غير مدفوع"}</p>
+                      <button
+                        className="text-blue-500"
+                        onClick={() => handleDeleteExpense(expense.id)}
+                      >
+                        <img
+                          alt="delete"
+                          src="./src/assets/delete.svg"
+                          className="mx-auto h-6 w-auto"
+                        />
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))

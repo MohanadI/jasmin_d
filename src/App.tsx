@@ -1,23 +1,35 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { generateInvoicePDF } from "./utils/pdfUtils";
+import { supabase } from "./api/supabaseClient";
+
+type Payment = {
+  id: number;
+  apartment: number;
+  amount: number;
+  date: string;
+  description: string;
+  status: string;
+};
 
 function App() {
   const [apartment, setApartment] = useState("");
-  const [payments, setPayments] = useState([]);
-  const [filteredPayments, setFilteredPayments] = useState([]);
+  const [filteredPayments, setFilteredPayments] = useState<Payment[]>([]);
 
-  useEffect(() => {
-    fetch("/payments")
-      .then((response) => response.json())
-      .then((data) => setPayments(data));
-  }, []);
-
-  const handleLogin = (e:any) => {
+  const handlePaymentSearch = async (e: any) => {
     e.preventDefault();
-    setFilteredPayments(
-      payments.filter((payment:any) => payment.apartment === parseInt(apartment))
-    );
+
+    const { data, error } = await supabase
+      .from("payments")
+      .select("*")
+      .eq("apartment", parseInt(apartment)); // Searching by apartment number
+
+    if (error) {
+      console.error("Error searching payments:", error.message);
+      return;
+    }
+
+    setFilteredPayments(data);
   };
 
   const monthToArabicOutput = (input: string) => {
@@ -56,7 +68,7 @@ function App() {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form onSubmit={handleLogin} className="space-y-6">
+          <form onSubmit={handlePaymentSearch} className="space-y-6">
             <div>
               <label
                 htmlFor="apartment_number"

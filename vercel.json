@@ -1,9 +1,0 @@
-{
-  "rewrites": [
-    { "source": "/login", "destination": "/api/login" },
-    { "source": "/logout", "destination": "/api/logout" },
-    { "source": "/payment", "destination": "/api/payment" },
-    { "source": "/expense", "destination": "/api/expense" },
-    { "source": "/payment:id", "destination": "/api/payment:id" }
-  ]
-}

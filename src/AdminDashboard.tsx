@@ -3,6 +3,7 @@ import PaymentsComponent from "./components/PaymentsComponent";
 import ExpensesComponent from "./components/ExpensesComponent";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "./Providers/AuthProvider";
+import { supabase } from "./api/supabaseClient";
 
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState("payments");
@@ -13,13 +14,12 @@ const AdminDashboard = () => {
     setActiveTab(tab);
   };
   const handleLogout = async () => {
-    await fetch("/logout", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-    });
-    localStorage.removeItem("token");
-    logoutCallback();
-    navigate("/admin");
+    const { error } = await supabase.auth.signOut();
+    if (!error){
+      localStorage.removeItem("token");
+      logoutCallback();
+      navigate("/admin");
+    } 
   };
 
   return (

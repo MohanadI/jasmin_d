@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "./Providers/AuthProvider";
+import { supabase } from "./api/supabaseClient";
 
 function AdminLogin() {
   const [username, setUsername] = useState("");
@@ -11,14 +12,12 @@ function AdminLogin() {
 
   const handleLogin = async (e:any) => {
     e.preventDefault();
-    const response = await fetch("/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password }),
+    const { data } = await supabase.auth.signInWithPassword({
+      email: username,
+      password: password,
     });
-    const data = await response.json();
-    if (data.token) {
-      localStorage.setItem("token", data.token);
+    if (data.user) {
+      localStorage.setItem("token", data.session.access_token);
       loginCallback();
       navigate("/admin-dashboard"); // Redirect to the admin dashboard
     } else {
