@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "./Providers/AuthProvider";
 import { supabase } from "./api/supabaseClient";
 
@@ -28,11 +28,13 @@ function AdminLogin() {
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        <img
-          alt="Your Company"
-          src="./mark.svg"
-          className="mx-auto h-10 w-auto"
-        />
+        <Link to={"/"}>
+          <img
+            alt="Your Company"
+            src="./mark.svg"
+            className="mx-auto h-10 w-auto"
+          />
+        </Link>
       </div>
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
         <form onSubmit={handleLogin} className="space-y-6">

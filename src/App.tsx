@@ -137,7 +137,12 @@ function App() {
             </ul>
           </div>
         )}
-
+        {filteredPayments.length === 0 && apartment !== '' && (
+          <h3 className="p-12 text-center bg-slate-100 mt-2">
+            {" "}
+            لا يوجد فواتير
+          </h3>
+        )}
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm text-center">
           <Link to="/admin" className="text-indigo-600 hover:text-indigo-500">
             تسجيل الدخول كمسؤول

@@ -122,7 +122,7 @@ const PaymentsComponent = () => {
           placeholder="ابحث باستخدام رقم الشقة أو الوصف"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="mb-4 p-2 border border-gray-300 rounded text-sm w-1/3"
+          className="mb-4 p-2 border border-gray-300 rounded text-sm w-2/4"
         />
         <button
           onClick={() => setIsModalOpen(true)}
@@ -147,62 +147,62 @@ const PaymentsComponent = () => {
             </tr>
           </thead>
           <tbody>
-            {filteredPayments.length > 0 ? (
-              filteredPayments.map((payment: Payment) => (
-                <tr key={payment.id} className="text-center hover:bg-gray-200">
-                  <td className="py-2 px-4 border-b top-0 bg-white z-10 sticky right-0">
-                    {payment.apartment}
-                  </td>
-                  <td className="py-2 px-4 border-b bg-gray:300">
-                    {payment.amount}
-                  </td>
-                  <td className="py-2 px-4 border-b bg-gray:300">
-                    {payment.date}
-                  </td>
-                  <td className="py-2 px-4 border-b bg-gray:300">
-                    {payment.description}
-                  </td>
-                  <td className="py-2 px-4 border-b bg-gray:300">
-                    {payment.status === "paid" ? "مدفوع" : "غير مدفوع"}
-                  </td>
-                  <td className="py-2 px-4 border-b bg-gray:300">
-                    <button
-                      className="text-blue-500"
-                      onClick={() => generateInvoicePDF(payment)}
-                    >
-                      <img
-                        alt="download"
-                        src="./download.svg"
-                        className="mx-auto h-6 w-auto"
-                      />
-                    </button>
-                    <button
-                      className="text-blue-500"
-                      onClick={() => handleDeletePayment(payment.id)}
-                    >
-                      <img
-                        alt="delete"
-                        src="./delete.svg"
-                        className="mx-auto h-6 w-auto"
-                      />
-                    </button>
-                  </td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td className="py-2 px-4 border-b text-center">
-                  لا يوجد مدفوعات
-                </td>
-              </tr>
-            )}
+            {filteredPayments.length > 0
+              ? filteredPayments.map((payment: Payment) => (
+                  <tr
+                    key={payment.id}
+                    className="text-center hover:bg-gray-200"
+                  >
+                    <td className="py-2 px-4 border-b top-0 bg-white z-10 sticky right-0">
+                      {payment.apartment}
+                    </td>
+                    <td className="py-2 px-4 border-b bg-gray:300">
+                      {payment.amount}
+                    </td>
+                    <td className="py-2 px-4 border-b bg-gray:300">
+                      {payment.date}
+                    </td>
+                    <td className="py-2 px-4 border-b bg-gray:300">
+                      {payment.description}
+                    </td>
+                    <td className="py-2 px-4 border-b bg-gray:300">
+                      {payment.status === "paid" ? "مدفوع" : "غير مدفوع"}
+                    </td>
+                    <td className="py-2 px-4 border-b bg-gray:300">
+                      <button
+                        className="text-blue-500"
+                        onClick={() => generateInvoicePDF(payment)}
+                      >
+                        <img
+                          alt="download"
+                          src="./download.svg"
+                          className="mx-auto h-6 w-auto"
+                        />
+                      </button>
+                      <button
+                        className="text-blue-500"
+                        onClick={() => handleDeletePayment(payment.id)}
+                      >
+                        <img
+                          alt="delete"
+                          src="./delete.svg"
+                          className="mx-auto h-6 w-auto"
+                        />
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              : null}
           </tbody>
         </table>
       </div>
+      {filteredPayments.length === 0 && (
+        <h3 className="p-12 text-center bg-slate-100"> لا يوجد فواتير</h3>
+      )}
 
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-20">
-          <div className="bg-white p-6 rounded shadow-lg w-2/4">
+          <div className="bg-white p-6 rounded shadow-lg md:w-2/4 w-full mr-2 ml-2">
             <h2 className="text-xl mb-4">اضف دفعة جديده</h2>
             <form onSubmit={handlePaymentSubmit}>
               <div className="mb-4">

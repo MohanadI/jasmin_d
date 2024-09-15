@@ -114,51 +114,53 @@ const ExpensesComponent = () => {
             </tr>
           </thead>
           <tbody>
-            {filteredExpenses.length > 0 ? (
-              filteredExpenses.map((expense: Expense) => (
-                <tr key={expense.id} className="text-center hover:bg-gray-200">
-                  <td className="py-2 px-4 border-b top-0 bg-white z-10 sticky right-0">
-                    {expense.category}
-                  </td>
-                  <td className="py-2 px-4 border-b bg-gray:300">
-                    {expense.amount}
-                  </td>
-                  <td className="py-2 px-4 border-b bg-gray:300">
-                    {expense.date}
-                  </td>
-                  <td className="py-2 px-4 border-b bg-gray:300">
-                    {expense.description}
-                  </td>
-                  <td className="py-2 px-4 border-b bg-gray:300">
-                    <div className="flex flex-row justify-between">
-                      <p>{expense.status === "paid" ? "مدفوع" : "غير مدفوع"}</p>
-                      <button
-                        className="text-blue-500"
-                        onClick={() => handleDeleteExpense(expense.id)}
-                      >
-                        <img
-                          alt="delete"
-                          src="./delete.svg"
-                          className="mx-auto h-6 w-auto"
-                        />
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td className="py-2 px-4 border-b text-center">
-                  لا يوجد مصروفات
-                </td>
-              </tr>
-            )}
+            {filteredExpenses.length > 0
+              ? filteredExpenses.map((expense: Expense) => (
+                  <tr
+                    key={expense.id}
+                    className="text-center hover:bg-gray-200"
+                  >
+                    <td className="py-2 px-4 border-b top-0 bg-white z-10 sticky right-0">
+                      {expense.category}
+                    </td>
+                    <td className="py-2 px-4 border-b bg-gray:300">
+                      {expense.amount}
+                    </td>
+                    <td className="py-2 px-4 border-b bg-gray:300">
+                      {expense.date}
+                    </td>
+                    <td className="py-2 px-4 border-b bg-gray:300">
+                      {expense.description}
+                    </td>
+                    <td className="py-2 px-4 border-b bg-gray:300">
+                      <div className="flex flex-row justify-between">
+                        <p>
+                          {expense.status === "paid" ? "مدفوع" : "غير مدفوع"}
+                        </p>
+                        <button
+                          className="text-blue-500"
+                          onClick={() => handleDeleteExpense(expense.id)}
+                        >
+                          <img
+                            alt="delete"
+                            src="./delete.svg"
+                            className="mx-auto h-6 w-auto"
+                          />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              : null}
           </tbody>
         </table>
       </div>
+      {filteredExpenses.length === 0 && (
+        <h3 className="p-12 text-center bg-slate-100"> لا يوجد مصروفات </h3>
+      )}
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-20">
-          <div className="bg-white p-6 rounded shadow-lg w-2/4">
+          <div className="bg-white p-6 rounded shadow-lg md:w-2/4 w-full mr-2 ml-2">
             <h2 className="text-xl mb-4">اضف دفعة جديده</h2>
             <form onSubmit={handleExpenseSubmit}>
               <div className="mb-4">
