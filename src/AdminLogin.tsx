@@ -30,7 +30,7 @@ function AdminLogin() {
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <img
           alt="Your Company"
-          src="./src/assets/mark.svg"
+          src="./mark.svg"
           className="mx-auto h-10 w-auto"
         />
       </div>

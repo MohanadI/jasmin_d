@@ -27,7 +27,7 @@ const AdminDashboard = () => {
       <div className="sm:mx-auto sm:w-full sm:max-w-sm text-center">
         <img
           alt="Your Company"
-          src="./src/assets/mark.svg"
+          src="./mark.svg"
           className="mx-auto h-10 w-auto"
         />
         <h1 className="font-bold mb-2 text-[26px] lg:text-2xl 4xl:text-[26px]">

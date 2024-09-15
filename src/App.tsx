@@ -59,7 +59,7 @@ function App() {
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img
             alt="jasmin_d"
-            src="./src/assets/mark.svg"
+            src="./mark.svg"
             className="mx-auto h-14 w-auto"
           />
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
@@ -123,7 +123,7 @@ function App() {
                     >
                       <img
                         alt="download"
-                        src="./src/assets/download.svg"
+                        src="./download.svg"
                         className="mx-auto h-6 w-auto"
                       />
                     </button>

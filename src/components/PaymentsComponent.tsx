@@ -172,7 +172,7 @@ const PaymentsComponent = () => {
                     >
                       <img
                         alt="download"
-                        src="./src/assets/download.svg"
+                        src="./download.svg"
                         className="mx-auto h-6 w-auto"
                       />
                     </button>
@@ -182,7 +182,7 @@ const PaymentsComponent = () => {
                     >
                       <img
                         alt="delete"
-                        src="./src/assets/delete.svg"
+                        src="./delete.svg"
                         className="mx-auto h-6 w-auto"
                       />
                     </button>
