@@ -14,6 +14,14 @@ export const generateInvoicePDF = async (payment: Payment) => {
     var pdfFonts = (await import("./fonts")).default;
     pdfMake.vfs = pdfFonts;
 
+    let apartmentName: any = payment.apartment;
+    if (payment.apartment === 3) {
+      apartmentName = "Jasmin Building C";
+    } else if (payment.apartment === 2) {
+      apartmentName = "Jasmin Building B";
+    } else if (payment.apartment === 1) {
+      apartmentName = "Jasmin Building A";
+    }
     const docDefinition: any = {
       pageSize: "A4",
       pageOrientation: "portrait",
@@ -33,7 +41,12 @@ export const generateInvoicePDF = async (payment: Payment) => {
           columns: [
             {
               width: "50%",
-              text: `Apartment Number: ${payment.apartment}`,
+              text:
+                payment.apartment === 3 ||
+                payment.apartment === 2 ||
+                payment.apartment === 1
+                  ? apartmentName
+                  : `Apartment Number: ${payment.apartment}`,
               style: "detailLabel",
             },
             {

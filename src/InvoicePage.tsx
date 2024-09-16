@@ -49,18 +49,33 @@ const InvoicePage = () => {
   };
 
   if (loading) {
-    return <div>جاري التحميل...</div>; // "Loading..." in Arabic
+    return (
+      <div className="flex min-h-full flex-1 flex-col justify-center px-2 py-12 lg:px-8 w-full text-center">
+        جاري التحميل...
+      </div>
+    ); // "Loading..." in Arabic
   }
 
   if (!payment) {
-    return <div>لم يتم العثور على الفاتورة لهذه الشقة والوصف المحدد.</div>; // "Invoice not found for the specified apartment and description."
+    return (
+      <div className="flex min-h-full flex-1 flex-col justify-center px-2 py-12 lg:px-8 w-full text-center">
+        لم يتم العثور على الفاتورة لهذه الشقة والوصف المحدد.
+      </div>
+    ); // "Invoice not found for the specified apartment and description."
   }
 
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-2 py-12 lg:px-8 w-2/3 m-auto">
-      <h1 className="text-center mt-20">
-        فاتورة الشقة رقم {payment.apartment}
-      </h1>
+      {payment.apartment === 3 ? (
+        <h1 className="text-center mt-20">
+          فاتورة عماره ج عن شهر {payment.description}
+        </h1>
+      ) : (
+        <h1 className="text-center mt-20">
+          فاتورة الشقة رقم {payment.apartment} عن شهر {payment.description}
+        </h1>
+      )}
+
       <button
         onClick={handleDownload}
         className="p-2 bg-blue-500 text-white rounded mt-5"
