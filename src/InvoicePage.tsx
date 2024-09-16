@@ -65,7 +65,7 @@ const InvoicePage = () => {
         onClick={handleDownload}
         className="p-2 bg-blue-500 text-white rounded mt-5"
       >
-        تحميل الفاتورة بصيغة
+        تحميل الفاتورة
       </button>
       <Link to="/" className="p-2 text-blue-500 rounded mt-5">
         العوده الى الصفحه الرئيسية
