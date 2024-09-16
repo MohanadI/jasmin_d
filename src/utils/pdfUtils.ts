@@ -56,7 +56,10 @@ export const generateInvoicePDF = async (payment: Payment) => {
               text: `Status: ${
                 payment.status === "paid" ? "Paid" : "Not Paid"
               }`,
-              style: "detailValue",
+              style:
+                payment.status === "paid"
+                  ? "paidDetailValue"
+                  : "notPaidDetailValue",
               alignment: "right",
             },
           ],
@@ -87,7 +90,7 @@ export const generateInvoicePDF = async (payment: Payment) => {
           margin: [0, 10, 0, 10],
         },
         {
-          text: "Thank you for your payment!",
+          text: payment.status === "paid" ? "Thank you for your payment!" : "",
           style: "footer",
           alignment: "center",
           margin: [0, 10, 0, 0],
@@ -97,22 +100,30 @@ export const generateInvoicePDF = async (payment: Payment) => {
         header: {
           fontSize: 22,
           bold: true,
-          color: "#4CAF50",
+          color: "#333333",
         },
         subheader: {
           fontSize: 16,
           bold: true,
-          color: "#3B3B3B",
+          color: "#333333",
           decoration: "underline",
         },
         detailLabel: {
           fontSize: 14,
           bold: true,
-          color: "#4CAF50",
+          color: "#333333",
         },
         detailValue: {
           fontSize: 14,
           color: "#333333",
+        },
+        notPaidDetailValue: {
+          fontSize: 14,
+          color: "#991B1B",
+        },
+        paidDetailValue: {
+          fontSize: 14,
+          color: "#4CAF50",
         },
         descriptionText: {
           fontSize: 12,
