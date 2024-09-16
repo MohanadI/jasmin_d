@@ -22,7 +22,6 @@ const PaymentsComponent = () => {
   const [searchDescription, setSearchDescription] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentPayment, setCurrentPayment] = useState<Payment | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
 
   const resetForm = () => {
     setApartment("");
@@ -50,8 +49,6 @@ const PaymentsComponent = () => {
   const handlePaymentSearch = async () => {
     if (searchDescription === "" && searchQuery === "") return;
 
-    setIsLoading(true);
-
     try {
       let query = supabase.from("payments").select("*");
 
@@ -73,8 +70,6 @@ const PaymentsComponent = () => {
       setPayments(data);
     } catch (err) {
       console.error("An unexpected error occurred:", err);
-    } finally {
-      setIsLoading(false);
     }
   };
 
