@@ -124,7 +124,7 @@ const ExpensesComponent = () => {
                       {expense.category}
                     </td>
                     <td className="py-2 px-4 border-b bg-gray:300">
-                      {expense.amount}
+                      {expense.amount} &#8362;
                     </td>
                     <td className="py-2 px-4 border-b bg-gray:300">
                       {expense.date}

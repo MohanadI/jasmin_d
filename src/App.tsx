@@ -122,7 +122,7 @@ function App() {
                       : { backgroundColor: "#ffe3e1" }
                   }
                 >
-                  <p>المبلغ: {payment.amount}</p>
+                  <p>المبلغ: {payment.amount} &#8362;</p>
                   <p>التاريخ: {payment.date}</p>
                   <p>
                     تحميل الفاتوره:{" "}

@@ -48,7 +48,7 @@ export const generateInvoicePDF = async (payment: Payment) => {
           columns: [
             {
               width: "50%",
-              text: `Amount: ${payment.amount}`,
+              text: `Amount: ${payment.amount} ILS`,
               style: "detailLabel",
             },
             {
