@@ -141,7 +141,7 @@ export const generateInvoicePDF = async (payment: Payment) => {
     // Create and download the PDF
     pdfMake
       .createPdf(docDefinition)
-      .download(`invoice-${payment.apartment}-${payment.date}.pdf`);
+      .download(`invoice-${payment.apartment}-${payment.description}.pdf`);
   } catch (error) {
     console.error("Error generating PDF:", error);
   }

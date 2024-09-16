@@ -7,6 +7,7 @@ import AdminLogin from "./AdminLogin";
 import AdminDashboard from "./AdminDashboard";
 import { AuthProvider } from "./Providers/AuthProvider";
 import ProtectedRoute from "./Providers/ProtectedRoute";
+import InvoicePage from "./InvoicePage";
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
   {
     path: "/admin-dashboard",
     element: <ProtectedRoute element={<AdminDashboard />} />,
+  },
+  {
+    path: "/invoice/:apartment/:description",
+    element: <InvoicePage />, // Add the new route
   },
 ]);
 
